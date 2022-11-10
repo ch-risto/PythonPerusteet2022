@@ -18,6 +18,7 @@ cafe = {
 services = ", ".join(cafe["categories"])
 address = cafe["location"]["zip_code"] + " " + cafe["location"]["city"]
 
+# tulostetaan halutut tiedot
 print(cafe["name"])
 print(cafe["location"]["address"])
 print(address)
