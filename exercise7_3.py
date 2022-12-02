@@ -20,7 +20,13 @@ for item in shopcart:
     # lisätään jokaisen tuotteen hinta kokonaissummaan
     total = total + item['price']
 
+# Lasketaan alv:
+# Arvonlisäveron määrä = sovellettava verokanta x verollinen hinta / (100 + sovellettava verokanta)
+alv = 24
+tax = 24 * total / (100+24)
+
 print()
 # tulostetaan yhteissumma ja toivotetaan tervetuloa uudelleen!
-print(f"Yhteensä {total}€.")
+print(f"Yhteensä {total:.2f}€.")
+print(f"Alv ({alv}%): {round(tax, 2)}€.")
 print("Tervetuloa uudelleen!")
