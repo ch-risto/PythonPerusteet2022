@@ -1,13 +1,17 @@
+import json
 import datetime
 
 now = datetime.datetime.now()
 
-# Vieraskirjaohjelma
-# Ihan ensimmäiseksi luodaan tiedosto. x:llä tiedoston luominen ja tiedostoon kirjoittaminen
-# luo virheen jos tiedosto on jo olemassa, eli kommentoidaan pois ekan kutsun jälkeen
-#file_create = open("guestbook.txt", "x")
-#file_create.write("Tervetuloa käyttämään vieraskirjaa!\n")
-#file_create.close()
+# aukaistaan yhteys vieraskirjatiedostoon lukumuodossa ja tuodaan data
+# dataa tarvitaan sekä luettaessa että kirjoitettaessa vieraskirjaan
+# suljetaan yhteys tiedostoon
+file_handle = open("guestbook.json", "r", encoding="utf-8")
+content = file_handle.read()
+file_handle.close()
+
+# tuodaan tiedosto json:ista dictionaryksi
+entries = json.loads(content)
 
 # Kysytään käyttäjältä, haluaako hän lukea vai kirjoittaa vieraskirjaa (l/k)
 # Tehdään kysymys loopissa, joka kysyy käyttäjältä mitä haluaa tehdä, kunnes vastaa "oikein"
@@ -22,23 +26,39 @@ while again:
 # Jos lukea, haetaan tiedostosta rivit ja tulostetaan näytölle käyttäen silmukkaa
 if activity == "l":
 
-    # aukaistaan yhteys tiedostoon lukumuodossa ja tuodaan data luettavaksi
-    file_handle = open("guestbook.txt", "r")
+    print("Tervetuloa vieraskirjaan!")
+    print()
+
 
     # haetaan silmukassa rivejä niin kauan kuin niitä on
-    while True:
-        line = file_handle.readline()
-        print(line)
-
-        if not line:
-            break
+    for line in entries:
+        print(f"{line['date']}")
+        print(f"{line['entry']}")
+        print()
 
 # Jos kirjoittaa, tallennetaan rivi tiedoston loppuun
 elif activity == "k":
+    # Kysytään käyttäjältä mitä haluaa kirjoittaa ja lisätään päivämäärä automaattisesti
     txt = input("Kirjoita uusi viesti:\n")
+    day = now.strftime("%d.%m.%y %H:%M")
 
-    file_handle = open("guestbook.txt", "a")
-    file_handle.write(f"{now.day}.{now.month}.{now.year} {now.hour}:{now.minute} {txt}\n")
+    # Tallennetaan päivämäärä ja kirjoitettu viesti muuttujaan
+    entry = {
+        "date": day,
+        "entry": txt
+    }
 
-# hyvien tapojen mukaisesti myös suljetaan yhteys tiedostoon
-file_handle.close()
+    # lisätään uusi kirjoitus kokoelmaan
+    entries.append(entry)
+
+    # listasta json-muotoon (tekstiksi)
+    guestbook = json.dumps(entries)
+
+    # avataan yhteys tiedostoon, json-tiedostoissa aina kirjoitusmuodossa
+    # (erillistä append toimintoa ei tarvita) vaan json kirjoittaa päälle
+    file_handle = open("guestbook.json", "w")
+    # tallennetaan teksti ja suljetaan yhteys
+    file_handle.write(guestbook)
+    file_handle.close()
+
+    print("Vieraskirjamerkintäsi on tallennettu")
