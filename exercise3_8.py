@@ -22,9 +22,6 @@ student = True
 regular = True
 mail = 7.95
 
-if total > 99:
-    mail = 0
-
 if student_ == "E":
     student = False
 
@@ -32,6 +29,9 @@ if student:
     total = total * .9
     if campaign_code == "BK2SCHOOL":
         total = total * .8
+
+if campaign_code == "FALL22":
+    total = total * .9
 
 if regular_ == "E":
     regular = False
@@ -42,8 +42,8 @@ if regular:
     points = points + total // 10 * 100
     total = total - (points // 1000 * 5)
 
-if campaign_code == "FALL22":
-    total = total * .9
+if total > 99:
+    mail = 0
 
 #Tulosta lopullinen tilauksen loppusumma postikuluineen
 print(f"Loppusumma postikuluineen on {round(total + mail, 2)}€")

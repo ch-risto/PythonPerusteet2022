@@ -12,9 +12,12 @@ pay = float(pay)
 if hours <= 40:
     salary = pay * hours
 else:
-    salary = hours * pay + (hours - 40) * pay * .5
+    # lasketaan ylityökorvaus
+    overtime = hours - 40
+    payment_of_overtime = pay * 1.5
+    salary = pay * 40 + overtime * payment_of_overtime
 
 # Tulostetaan vastaus
-format_salary = "{:.1f}".format(salary)
+format_salary = "{:.2f}".format(salary)
 
 print(f"Viikon ansiosi ovat: {format_salary}€")

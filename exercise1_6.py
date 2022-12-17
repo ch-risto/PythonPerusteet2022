@@ -1,32 +1,29 @@
-sentit = input("Anna 1-100 senttiä:\n")
-sentit = int(sentit)
+cents = int(input("Anna 1-100 senttiä:\n"))
 
 # Montako 50snt kolikkoa summaan mahtuu?
 
-viiskyt = sentit // 50
-remViiskyt = sentit % 50
+total50 = cents // 50
+cents = cents % 50
 
 # montako 20snt kolikkoa summaan mahtuu?
 
-kakskyt = remViiskyt //20
-remKakskyt = remViiskyt % 20
+total20 = cents // 20
+cents = cents % 20
 
 # jne
 
-kymppi = remKakskyt // 10
-remKymppi = remKakskyt % 10
+total10 = cents // 10
+cents = cents % 10
 
-viis = remKymppi // 5
-remViis = remKymppi % 5
+total5 = cents // 5
+cents = cents % 5
 
-kaks = remViis // 2
-remKaks = remViis % 2
+total2 = cents // 2
+cents = cents % 2
 
-yks = remKaks // 1
-
-print(f"50 snt kolikoita {viiskyt} kpl\n"
-      f"20 snt kolikoita {kakskyt} kpl\n"
-      f"10 snt kolikoita {kymppi} kpl\n"
-      f"5 snt kolikoita {viis} kpl\n"
-      f"2 snt kolikoita {kaks} kpl\n"
-      f"1 snt kolikoita {yks} kpl")
+print(f"50 snt kolikoita {total50} kpl\n"
+      f"20 snt kolikoita {total20} kpl\n"
+      f"10 snt kolikoita {total10} kpl\n"
+      f"5 snt kolikoita {total5} kpl\n"
+      f"2 snt kolikoita {total2} kpl\n"
+      f"1 snt kolikoita {cents} kpl")

@@ -3,7 +3,7 @@ from datetime import date
 
 # ohjelmassa käytettävät tiedot:
 today = date.today()
-date_text = today.strftime("%d.%m.%y")
+date_text = today.strftime("%d.%m.%Y")
 name = "Testi Henkilöinen"
 birth_year = 1982
 balance = 1698
