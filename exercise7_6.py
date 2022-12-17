@@ -58,10 +58,10 @@ restaurants = {
 suggest = []
 
 # Kysellään käyttäjältä kysymyksiä
-rate = input("Monenko tähden ravintolan haluat vähintään? (1-5)\n")
-price = input("Minkä hintatason ravintolan haluat maksimissaan? (1-5)\n")
-reservation = input("Haluatko tehdä etukäteen varauksen? (k/e)\n")
-time = input("Mihin kellonaikaan haluat ruokailla? (0-23)\n")
+rate = int(input("Monenko tähden ravintolan haluat vähintään? (1-5)\n"))
+price = int(input("Minkä hintatason ravintolan haluat maksimissaan? (1-5)\n"))
+reservation = input("Haluatko tehdä etukäteen varauksen? (k/e)\n").lower()
+time = int(input("Mihin kellonaikaan haluat ruokailla? (0-23)\n"))
 
 # logiikka kellonaijojen suhteen:
 # breakfast = 6-10
@@ -69,19 +69,30 @@ time = input("Mihin kellonaikaan haluat ruokailla? (0-23)\n")
 # dinner = 17-24
 # night = 0-5
 
+# luodaan muuttuja, jolla tarkastellaan halutaanko suositella ravintolaa
+suggest = True
+
 # luodaan silmukka, jossa käydään kaikki ravintolat läpi:
 for r in restaurants:
     restaurant = restaurants[r]
+    if restaurant['rating'] < rate:
+        suggest = False
+    if price >= restaurant['price_level']:
+        suggest = False
+    if reservation == 'k' and restaurant['reservations'] == False:
+        suggest = False
+    if time < 6 and restaurant['services'] != 'night':
+        suggest = False
+    elif time < 11 and restaurant['services'] != 'breakfast':
+        suggest = False
+    elif time < 17 and restaurant['services'] != 'lunch':
+        suggest = False
+    elif time <= 24 and restaurant['services'] != 'dinner':
+        suggest = False
     # luodaan silmukka, jossa käydään kaikki ravintolan tiedot läpi
-    for n in restaurant:
-        value = restaurant[n]
-        print(value)
 
-    # luodaan silmukat käyttäjältä kysytyille tiedoille:
-    #if 'rating' >= rate:
-        #suggest.append(name)
+    if suggest:
+        print(restaurant["name"])
 
-#else:
-    #print("Valitettavasti sopivaa ravintolaa ei löytynyt.")
-
-print(suggest)
+else:
+    print("Valitettavasti sopivaa ravintolaa ei löytynyt.")
